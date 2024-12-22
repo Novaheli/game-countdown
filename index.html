@@ -37,28 +37,6 @@
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
-            position: relative;
-        }
-        /* Thanh ngang mờ hiển thị token */
-        #token-bar {
-            width: 300px;
-            height: 30px;
-            background-color: rgba(0, 0, 0, 0.1); /* Thanh mờ */
-            border-radius: 15px;
-            margin: 0 auto;
-            position: absolute;
-            top: 50%; /* Đặt vị trí chính giữa dòng token */
-            transform: translateY(-50%);
-            overflow: hidden;
-        }
-        #token-count {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            font-weight: bold;
-            color: black;
         }
         /* Định vị tên người dùng ở góc trái */
         #username {
@@ -73,3 +51,53 @@
         .disabled-button {
             display: none; /* Ẩn nút sau khi bấm */
         }
+    </style>
+</head>
+<body>
+    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
+    <div id="username"></div>
+
+    <div class="game-container">
+        <h1 id="title">Start Mining</h1> <!-- Dòng chữ sẽ thay đổi -->
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
+        <p id="countdown"></p> <!-- Dòng đếm ngược ẩn đi -->
+        <p id="tokens">Tokens: 0</p>
+    </div>
+
+    <script>
+        // Lấy tên người dùng từ URL và hiển thị
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('username');
+        document.getElementById('username').textContent = `User: ${userName}`;
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const tokensElement = document.getElementById('tokens');
+            const startButton = document.getElementById('startButton');
+            const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
+            let time = 24 * 3600; // 24 hours in seconds
+            let tokens = 0; // Initialize the token count
+
+            // Đổi tiêu đề thành "Mining"
+            titleElement.textContent = "Mining";
+
+            // Ẩn nút Start
+            startButton.classList.add('disabled-button');
+
+            // Bắt đầu đồng hồ đếm ngược (ẩn dòng đếm ngược, chỉ cập nhật token)
+            const interval = setInterval(() => {
+                time--;
+                tokens++; // Tăng số lượng token mỗi giây
+
+                // Dừng đồng hồ khi hết thời gian
+                if (time <= 0) {
+                    clearInterval(interval);
+                }
+
+                // Cập nhật token, dòng countdown vẫn chạy ngầm
+                tokensElement.textContent = `Tokens: ${tokens}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
