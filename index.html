@@ -13,7 +13,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            position: relative; /* Cần cho việc định vị tên người dùng */
+            position: relative;
         }
         .game-container {
             text-align: center;
@@ -87,4 +87,50 @@
 
     <script>
         // Lấy tên người dùng từ URL và hiển thị
-        const urlParams 
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('username');
+        document.getElementById('username').textContent = `User: ${userName}`;
+
+        // Lấy số token đã lưu trong localStorage (nếu có)
+        let storedTokens = parseInt(localStorage.getItem('tokens')) || 0;
+        document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const tokensElement = document.getElementById('tokens');
+            const progressBar = document.getElementById('progressBar');
+            const startButton = document.getElementById('startButton');
+            const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
+            let time = 24 * 3600; // 24 hours in seconds
+            let tokens = storedTokens; // Lấy số token đã lưu trữ ban đầu
+
+            // Đổi tiêu đề thành "Mining"
+            titleElement.textContent = "Mining";
+
+            // Ẩn nút Start
+            startButton.classList.add('disabled-button');
+
+            // Bắt đầu đồng hồ đếm ngược (ẩn dòng đếm ngược, chỉ cập nhật token)
+            const interval = setInterval(() => {
+                time--;
+                tokens++; // Tăng số lượng token mỗi giây
+
+                // Cập nhật thanh tiến trình cho số token
+                const progressPercent = (tokens % 1000) / 10; // Cập nhật thanh khi token thay đổi
+                progressBar.style.width = `${progressPercent}%`;
+
+                // Dừng đồng hồ khi hết thời gian
+                if (time <= 0) {
+                    clearInterval(interval);
+                    // Lưu lại số token vào localStorage
+                    localStorage.setItem('tokens', tokens);
+                    document.getElementById('storedTokens').textContent = `$ ${tokens}`;
+                }
+
+                // Cập nhật token, dòng countdown vẫn chạy ngầm
+                tokensElement.textContent = `Tokens: ${tokens}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
