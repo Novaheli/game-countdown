@@ -30,7 +30,10 @@
         .start-button:hover {
             background-color: #0056b3;
         }
-        #countdown, #tokens {
+        #countdown {
+            display: none; /* Ẩn dòng đếm ngược */
+        }
+        #tokens {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
@@ -57,7 +60,7 @@
     <div class="game-container">
         <h1 id="title">Start Mining</h1> <!-- Dòng chữ sẽ thay đổi -->
         <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
-        <p id="countdown"></p>
+        <p id="countdown"></p> <!-- Dòng đếm ngược ẩn đi -->
         <p id="tokens">Tokens: 0</p>
     </div>
 
@@ -78,29 +81,21 @@
             // Đổi tiêu đề thành "Mining"
             titleElement.textContent = "Mining";
 
-            // Làm mờ và ẩn nút Start
+            // Ẩn nút Start
             startButton.classList.add('disabled-button');
 
-            function formatTime(seconds) {
-                const hours = Math.floor(seconds / 3600);
-                const minutes = Math.floor((seconds % 3600) / 60);
-                const secondsLeft = seconds % 60;
-                return `${hours}h ${minutes}m ${secondsLeft}s`;
-            }
-
-            countdownElement.textContent = `${formatTime(time)} remaining`;
-            tokensElement.textContent = `Tokens: ${tokens}`;
-
+            // Bắt đầu đồng hồ đếm ngược (ẩn dòng đếm ngược, chỉ cập nhật token)
             const interval = setInterval(() => {
                 time--;
-                tokens++; // Increase token count every second
+                tokens++; // Tăng số lượng token mỗi giây
+
+                // Dừng đồng hồ khi hết thời gian
                 if (time <= 0) {
                     clearInterval(interval);
-                    countdownElement.textContent = 'Game Over!';
-                } else {
-                    countdownElement.textContent = `${formatTime(time)} remaining`;
                 }
-                tokensElement.textContent = `Tokens: ${tokens}`; // Update the token display
+
+                // Cập nhật token, dòng countdown vẫn chạy ngầm
+                tokensElement.textContent = `Tokens: ${tokens}`;
             }, 1000);
         }
     </script>
