@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Game</title>
+    <title>Start Mining</title>
     <style>
         body {
             background-color: yellow;
@@ -46,19 +46,25 @@
     <script>
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
-            let time = 10;
+            let time = 24 * 60 * 60;  // 24 hours in seconds
 
-            countdownElement.textContent = `${time} seconds remaining`;
+            function updateCountdown() {
+                let hours = Math.floor(time / 3600);
+                let minutes = Math.floor((time % 3600) / 60);
+                let seconds = time % 60;
 
-            const interval = setInterval(() => {
-                time--;
+                countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s remaining`;
+
                 if (time <= 0) {
-                    clearInterval(interval);
                     countdownElement.textContent = 'Game Over!';
+                    clearInterval(interval);
                 } else {
-                    countdownElement.textContent = `${time} seconds remaining`;
+                    time--;
                 }
-            }, 1000);
+            }
+
+            const interval = setInterval(updateCountdown, 1000);
+            updateCountdown();  // Initialize the countdown immediately
         }
     </script>
 </body>
