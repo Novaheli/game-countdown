@@ -33,14 +33,22 @@
         #countdown {
             display: none; /* Ẩn dòng đếm ngược */
         }
+        #tokens {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
         /* Thanh ngang mờ hiển thị token */
         #token-bar {
-            margin-top: 20px;
             width: 300px;
             height: 30px;
             background-color: rgba(0, 0, 0, 0.1); /* Thanh mờ */
             border-radius: 15px;
-            position: relative;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%; /* Đặt vị trí chính giữa dòng token */
+            transform: translateY(-50%);
             overflow: hidden;
         }
         #token-count {
@@ -48,7 +56,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: black;
         }
@@ -65,10 +73,3 @@
         .disabled-button {
             display: none; /* Ẩn nút sau khi bấm */
         }
-    </style>
-</head>
-<body>
-    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
-    <div id="username"></div>
-
-    <div class="gam
