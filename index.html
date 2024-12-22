@@ -14,6 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
+            flex-direction: column; /* Căn giữa theo chiều dọc */
         }
         .game-container {
             text-align: center;
@@ -64,12 +65,88 @@
         .disabled-button {
             display: none; /* Ẩn nút sau khi bấm */
         }
-        /* Định vị $ ở giữa màn hình */
+        /* Căn giữa số token đã lưu trữ */
         #storedTokens {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 24px;
             font-weight: bold;
- 
+            color: black;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiển thị số token đã lưu trữ ở giữa màn hình -->
+    <p id="storedTokens">$ 0</p>
+
+    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
+    <div id="username"></div>
+
+    <div class="game-container">
+        <h1 id="title">Start Mining</h1>
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
+        <p id="countdown"></p> <!-- Dòng đếm ngược ẩn đi -->
+        <p id="tokens">Tokens: 0</p>
+
+        <!-- Thanh tiến trình cho số token -->
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy tên người dùng từ URL và hiển thị
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('username');
+        document.getElementById('username').textContent = `User: ${userName}`;
+
+        // Lấy số token đã lưu trong localStorage (nếu có)
+        let storedTokens = parseInt(localStorage.getItem('tokens')) || 0;
+        document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
+
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const tokensElement = document.getElementById('tokens');
+            const progressBar = document.getElementById('progressBar');
+            const startButton = document.getElementById('startButton');
+            const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
+            let time = 60; // 1 phút (60 giây)
+            let tokens = storedTokens; // Lấy số token đã lưu trữ ban đầu
+
+            // Đổi tiêu đề thành "Mining"
+            titleElement.textContent = "Mining";
+
+            // Ẩn nút Start
+            startButton.classList.add('disabled-button');
+
+            // Bắt đầu đồng hồ đếm ngược (ẩn dòng đếm ngược, chỉ cập nhật token)
+            const interval = setInterval(() => {
+                time--;
+                tokens++; // Tăng số lượng token mỗi giây
+
+                // Cập nhật thanh tiến trình cho số token (giới hạn thanh tiến trình ở mức 100)
+                const progressPercent = Math.min((tokens % 100), 100); // Đảm bảo không vượt quá 100%
+                progressBar.style.width = `${progressPercent}%`;
+
+                // Dừng đồng hồ khi hết thời gian
+                if (time <= 0) {
+                    clearInterval(interval);
+
+                    // Cập nhật số token và lưu vào localStorage (không giới hạn)
+                    storedTokens = tokens; // Lưu số token mới vào biến lưu trữ
+                    localStorage.setItem('tokens', storedTokens); // Lưu vào localStorage
+                    document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
+
+                    // Cập nhật lại giao diện và hiển thị nút Start
+                    setTimeout(() => {
+                        titleElement.textContent = "Start Mining";
+                        startButton.classList.remove('disabled-button');
+                    }, 1000);
+                }
+
+                // Cập nhật token
+                tokensElement.textContent = `Tokens: ${tokens}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
