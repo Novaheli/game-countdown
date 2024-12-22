@@ -33,10 +33,17 @@
         #countdown {
             display: none; /* Ẩn dòng đếm ngược */
         }
-        #tokens {
+        #tokens-container {
+            background-color: #ccc; /* Màu nền xám cho thanh bar */
+            padding: 10px;
+            border-radius: 5px;
+            width: 300px; /* Chiều rộng thanh bar */
             margin-top: 20px;
+        }
+        #tokens {
             font-size: 24px;
             font-weight: bold;
+            color: black; /* Màu chữ cho token */
         }
         /* Định vị tên người dùng ở góc trái */
         #username {
@@ -61,7 +68,11 @@
         <h1 id="title">Start Mining</h1> <!-- Dòng chữ sẽ thay đổi -->
         <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
         <p id="countdown"></p> <!-- Dòng đếm ngược ẩn đi -->
-        <p id="tokens">Tokens: 0</p>
+        
+        <!-- Thanh bar nền cho dòng tokens -->
+        <div id="tokens-container">
+            <p id="tokens">Tokens: 0</p>
+        </div>
     </div>
 
     <script>
