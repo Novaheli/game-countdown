@@ -13,7 +13,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            position: relative;
+            position: relative; /* Cần cho việc định vị tên người dùng */
         }
         .game-container {
             text-align: center;
@@ -48,4 +48,43 @@
         .progress-bar {
             height: 20px;
             background-color: #4caf50;
-            width: 
+            width: 0%;
+            border-radius: 10px;
+        }
+        /* Định vị tên người dùng ở góc trái */
+        #username {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+        }
+        /* Lớp cho nút đã vô hiệu hóa */
+        .disabled-button {
+            display: none; /* Ẩn nút sau khi bấm */
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
+    <div id="username"></div>
+
+    <div class="game-container">
+        <h1 id="title">Start Mining</h1>
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
+        <p id="countdown"></p> <!-- Dòng đếm ngược ẩn đi -->
+        <p id="tokens">Tokens: 0</p>
+
+        <!-- Thanh tiến trình cho số token -->
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <!-- Hiển thị số token đã lưu trữ -->
+        <p id="storedTokens">$ 0</p>
+    </div>
+
+    <script>
+        // Lấy tên người dùng từ URL và hiển thị
+        const urlParams 
