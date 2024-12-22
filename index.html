@@ -125,6 +125,12 @@
                     // Lưu lại số token vào localStorage
                     localStorage.setItem('tokens', tokens);
                     document.getElementById('storedTokens').textContent = `$ ${tokens}`;
+
+                    // Cập nhật lại giao diện và hiển thị nút Start
+                    setTimeout(() => {
+                        titleElement.textContent = "Start Mining";
+                        startButton.classList.remove('disabled-button');
+                    }, 1000);
                 }
 
                 // Cập nhật token
