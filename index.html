@@ -31,7 +31,7 @@
             background-color: #0056b3;
         }
         #countdown {
-            display: none; /* Ẩn dòng đếm ngược */
+            display: none; /* Ẩn dòng đồng hồ đếm ngược */
         }
         #tokens {
             margin-top: 20px;
@@ -49,3 +49,20 @@
         }
         /* Lớp cho nút đã vô hiệu hóa */
         .disabled-button {
+            display: none; /* Ẩn nút sau khi bấm */
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
+    <div id="username"></div>
+
+    <div class="game-container">
+        <h1 id="title">Start Mining</h1> <!-- Dòng chữ sẽ thay đổi -->
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
+        <p id="countdown"></p> <!-- Dòng đếm ngược bị ẩn -->
+        <p id="tokens">Tokens: 0</p>
+    </div>
+
+    <script>
+        // Lấy 
