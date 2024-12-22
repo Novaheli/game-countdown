@@ -191,21 +191,21 @@
                 if (time <= 0) {
                     clearInterval(interval);
                     storedTokens = tokens;
-                    localStorage.setItem('tokens', storedTokens); // Lưu lại số token
+                    localStorage.setItem('tokens', storedTokens);
                     document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
 
+                    // Cập nhật lại giao diện và hiển thị nút Start
                     setTimeout(() => {
                         titleElement.textContent = "Start Mining";
                         startButton.classList.remove('disabled-button');
                         localStorage.setItem('isMining', 'false');
-                        localStorage.setItem('timeLeft', 60);
+                        localStorage.setItem('timeLeft', 60); // Reset thời gian còn lại
                     }, 1000);
                 }
 
                 tokensElement.textContent = `Tokens: ${tokens}`;
                 localStorage.setItem('tokens', tokens);
                 localStorage.setItem('timeLeft', time);
-                localStorage.setItem('isMining', 'true');
             }, 1000);
         }
     </script>
