@@ -49,6 +49,12 @@
             background-color: gray;
             cursor: not-allowed;
         }
+        /* Tiêu đề bị ẩn ban đầu */
+        #title {
+            display: none;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +62,7 @@
     <div id="username"></div>
 
     <div class="game-container">
-        <h1 id="title">Start Mining</h1> <!-- Chỉ 1 tiêu đề -->
+        <h1 id="title">Mining LCcoin</h1> <!-- Tiêu đề ẩn, chỉ hiển thị sau khi nhấn Start -->
         <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
         <p id="countdown"></p>
         <p id="tokens">Tokens: 0</p>
@@ -80,8 +86,8 @@
             startButton.classList.add('disabled-button');
             startButton.disabled = true;
 
-            // Thay đổi nội dung tiêu đề thành "Mining LCcoin"
-            titleElement.textContent = "Mining LCcoin";
+            // Hiển thị tiêu đề "Mining LCcoin"
+            titleElement.style.display = "block";
 
             function formatTime(seconds) {
                 const hours = Math.floor(seconds / 3600);
@@ -98,4 +104,13 @@
                 tokens++; // Increase token count every second
                 if (time <= 0) {
                     clearInterval(interval);
-                    countdownElement.textContent = 'Game
+                    countdownElement.textContent = 'Game Over!';
+                } else {
+                    countdownElement.textContent = `${formatTime(time)} remaining`;
+                }
+                tokensElement.textContent = `Tokens: ${tokens}`; // Update the token display
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
