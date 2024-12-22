@@ -107,4 +107,38 @@
             // Đổi tiêu đề thành "Mining"
             titleElement.textContent = "Mining";
 
-    
+            // Ẩn nút Start
+            startButton.classList.add('disabled-button');
+
+            // Bắt đầu đồng hồ đếm ngược (ẩn dòng đếm ngược, chỉ cập nhật token)
+            const interval = setInterval(() => {
+                time--;
+                tokens++; // Tăng số lượng token mỗi giây
+
+                // Cập nhật thanh tiến trình cho số token (giới hạn thanh tiến trình ở mức 100)
+                const progressPercent = Math.min((tokens % 100), 100); // Đảm bảo không vượt quá 100%
+                progressBar.style.width = `${progressPercent}%`;
+
+                // Dừng đồng hồ khi hết thời gian
+                if (time <= 0) {
+                    clearInterval(interval);
+
+                    // Cập nhật số token và lưu vào localStorage (không giới hạn)
+                    storedTokens = tokens; // Lưu số token mới vào biến lưu trữ
+                    localStorage.setItem('tokens', storedTokens); // Lưu vào localStorage
+                    document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
+
+                    // Cập nhật lại giao diện và hiển thị nút Start
+                    setTimeout(() => {
+                        titleElement.textContent = "Start Mining";
+                        startButton.classList.remove('disabled-button');
+                    }, 1000);
+                }
+
+                // Cập nhật token
+                tokensElement.textContent = `Tokens: ${tokens}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
