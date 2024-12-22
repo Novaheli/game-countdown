@@ -110,11 +110,12 @@
 
         document.getElementById('storedTokens').textContent = `$ ${storedTokens}`;
 
-        if (isMining) {
-            // Nếu đang mining, bắt đầu lại tiến trình
+        // Nếu đang mining và có thời gian còn lại, tự động tiếp tục
+        if (isMining && timeLeft > 0) {
             startMining(timeLeft, storedTokens);
         }
 
+        // Khi bấm Start
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
             const tokensElement = document.getElementById('tokens');
@@ -157,7 +158,6 @@
                     }, 1000);
                 }
 
-                // Cập nhật token
                 tokensElement.textContent = `Tokens: ${tokens}`;
                 // Lưu lại tiến trình
                 localStorage.setItem('tokens', tokens);
@@ -166,6 +166,7 @@
             }, 1000);
         }
 
+        // Hàm bắt đầu mining nếu có tiến trình chưa hoàn tất
         function startMining(time, tokens) {
             const countdownElement = document.getElementById('countdown');
             const tokensElement = document.getElementById('tokens');
