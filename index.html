@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
+            position: relative; /* Cần cho việc định vị tên người dùng */
         }
         .game-container {
             text-align: center;
@@ -34,7 +35,15 @@
             font-size: 24px;
             font-weight: bold;
         }
-
+        /* Định vị tên người dùng ở góc trái */
+        #username {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+        }
         /* Lớp cho nút đã vô hiệu hóa */
         .disabled-button {
             background-color: gray;
@@ -43,27 +52,36 @@
     </style>
 </head>
 <body>
+    <!-- Hiển thị tên người dùng ở góc trên bên trái -->
+    <div id="username"></div>
+
     <div class="game-container">
-        <h1>Start Mining</h1>
-        <button id="startButton" class="start-button" onclick="startCountdown()">Start Mining</button>
+        <h1 id="title">Start Mining</h1> <!-- Chỉ 1 tiêu đề -->
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
         <p id="countdown"></p>
         <p id="tokens">Tokens: 0</p>
     </div>
 
     <script>
+        // Lấy tên người dùng từ URL và hiển thị
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('username');
+        document.getElementById('username').textContent = `User: ${userName}`;
+
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
             const tokensElement = document.getElementById('tokens');
             const startButton = document.getElementById('startButton');
+            const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
             let time = 24 * 3600; // 24 hours in seconds
             let tokens = 0; // Initialize the token count
 
             // Làm mờ và vô hiệu hóa nút Start
             startButton.classList.add('disabled-button');
             startButton.disabled = true;
-            
-            // Thay đổi chữ trên nút thành "Mining LCcoin"
-            startButton.textContent = "Mining LCcoin";
+
+            // Thay đổi nội dung tiêu đề thành "Mining LCcoin"
+            titleElement.textContent = "Mining LCcoin";
 
             function formatTime(seconds) {
                 const hours = Math.floor(seconds / 3600);
@@ -80,13 +98,4 @@
                 tokens++; // Increase token count every second
                 if (time <= 0) {
                     clearInterval(interval);
-                    countdownElement.textContent = 'Game Over!';
-                } else {
-                    countdownElement.textContent = `${formatTime(time)} remaining`;
-                }
-                tokensElement.textContent = `Tokens: ${tokens}`; // Update the token display
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+                    countdownElement.textContent = 'Game
