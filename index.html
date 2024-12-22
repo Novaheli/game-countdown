@@ -49,12 +49,6 @@
             background-color: gray;
             cursor: not-allowed;
         }
-        /* Tiêu đề bị ẩn ban đầu */
-        #title {
-            display: none;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
@@ -62,7 +56,7 @@
     <div id="username"></div>
 
     <div class="game-container">
-        <h1 id="title">Mining LCcoin</h1> <!-- Tiêu đề ẩn, chỉ hiển thị sau khi nhấn Start -->
+        <h1>Start Mining</h1>
         <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
         <p id="countdown"></p>
         <p id="tokens">Tokens: 0</p>
@@ -78,16 +72,12 @@
             const countdownElement = document.getElementById('countdown');
             const tokensElement = document.getElementById('tokens');
             const startButton = document.getElementById('startButton');
-            const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
             let time = 24 * 3600; // 24 hours in seconds
             let tokens = 0; // Initialize the token count
 
             // Làm mờ và vô hiệu hóa nút Start
             startButton.classList.add('disabled-button');
             startButton.disabled = true;
-
-            // Hiển thị tiêu đề "Mining LCcoin"
-            titleElement.style.display = "block";
 
             function formatTime(seconds) {
                 const hours = Math.floor(seconds / 3600);
