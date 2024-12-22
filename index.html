@@ -57,7 +57,7 @@
 
     <div class="game-container">
         <h1>Start Mining</h1>
-        <button id="startButton" class="start-button" onclick="startCountdown()">Start</button>
+        <button id="startButton" class="start-button" onclick="startCountdown()">Start Mining</button>
         <p id="countdown"></p>
         <p id="tokens">Tokens: 0</p>
     </div>
@@ -78,29 +78,8 @@
             // Làm mờ và vô hiệu hóa nút Start
             startButton.classList.add('disabled-button');
             startButton.disabled = true;
+            
+            // Thay đổi chữ trên nút thành "Mining LCcoin"
+            startButton.textContent = "Mining LCcoin";
 
-            function formatTime(seconds) {
-                const hours = Math.floor(seconds / 3600);
-                const minutes = Math.floor((seconds % 3600) / 60);
-                const secondsLeft = seconds % 60;
-                return `${hours}h ${minutes}m ${secondsLeft}s`;
-            }
-
-            countdownElement.textContent = `${formatTime(time)} remaining`;
-            tokensElement.textContent = `Tokens: ${tokens}`;
-
-            const interval = setInterval(() => {
-                time--;
-                tokens++; // Increase token count every second
-                if (time <= 0) {
-                    clearInterval(interval);
-                    countdownElement.textContent = 'Game Over!';
-                } else {
-                    countdownElement.textContent = `${formatTime(time)} remaining`;
-                }
-                tokensElement.textContent = `Tokens: ${tokens}`; // Update the token display
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+            function formatTime
