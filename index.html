@@ -64,11 +64,24 @@
         .disabled-button {
             display: none; /* Ẩn nút sau khi bấm */
         }
+        /* Định vị $ ở trên cùng và căn giữa */
+        #storedTokens {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
     </style>
 </head>
 <body>
     <!-- Hiển thị tên người dùng ở góc trên bên trái -->
     <div id="username"></div>
+
+    <!-- Hiển thị số token đã lưu trữ ở trên cùng, căn giữa -->
+    <p id="storedTokens">$ 0</p>
 
     <div class="game-container">
         <h1 id="title">Start Mining</h1>
@@ -80,9 +93,6 @@
         <div class="progress-container">
             <div id="progressBar" class="progress-bar"></div>
         </div>
-
-        <!-- Hiển thị số token đã lưu trữ -->
-        <p id="storedTokens">$ 0</p>
     </div>
 
     <script>
