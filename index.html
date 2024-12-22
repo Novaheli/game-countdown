@@ -14,7 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             position: relative;
-            flex-direction: column; /* Căn giữa theo chiều dọc */
+            flex-direction: column; /* Sắp xếp phần tử theo chiều dọc */
         }
         .game-container {
             text-align: center;
@@ -71,6 +71,10 @@
             font-weight: bold;
             color: black;
             margin-bottom: 20px;
+            position: absolute;
+            top: 20px; /* Đặt cách từ trên xuống */
+            left: 50%; /* Căn giữa theo chiều ngang */
+            transform: translateX(-50%); /* Dịch chuyển 50% chiều rộng của phần tử */
         }
     </style>
 </head>
