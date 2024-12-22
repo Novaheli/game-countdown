@@ -29,7 +29,7 @@
         .start-button:hover {
             background-color: #0056b3;
         }
-        #countdown {
+        #countdown, #tokens {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
@@ -41,30 +41,37 @@
         <h1>Start Mining</h1>
         <button class="start-button" onclick="startCountdown()">Start</button>
         <p id="countdown"></p>
+        <p id="tokens">Tokens: 0</p>
     </div>
 
     <script>
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
-            let time = 24 * 60 * 60;  // 24 hours in seconds
+            const tokensElement = document.getElementById('tokens');
+            let time = 24 * 3600; // 24 hours in seconds
+            let tokens = 0; // Initialize the token count
 
-            function updateCountdown() {
-                let hours = Math.floor(time / 3600);
-                let minutes = Math.floor((time % 3600) / 60);
-                let seconds = time % 60;
-
-                countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s remaining`;
-
-                if (time <= 0) {
-                    countdownElement.textContent = 'Game Over!';
-                    clearInterval(interval);
-                } else {
-                    time--;
-                }
+            function formatTime(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secondsLeft = seconds % 60;
+                return `${hours}h ${minutes}m ${secondsLeft}s`;
             }
 
-            const interval = setInterval(updateCountdown, 1000);
-            updateCountdown();  // Initialize the countdown immediately
+            countdownElement.textContent = `${formatTime(time)} remaining`;
+            tokensElement.textContent = `Tokens: ${tokens}`;
+
+            const interval = setInterval(() => {
+                time--;
+                tokens++; // Increase token count every second
+                if (time <= 0) {
+                    clearInterval(interval);
+                    countdownElement.textContent = 'Game Over!';
+                } else {
+                    countdownElement.textContent = `${formatTime(time)} remaining`;
+                }
+                tokensElement.textContent = `Tokens: ${tokens}`; // Update the token display
+            }, 1000);
         }
     </script>
 </body>
