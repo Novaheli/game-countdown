@@ -79,6 +79,9 @@
         <div class="progress-container">
             <div id="progressBar" class="progress-bar"></div>
         </div>
+
+        <!-- Hiển thị số token đã lưu trữ -->
+        <p id="storedTokens"></p>
     </div>
 
     <script>
@@ -87,6 +90,10 @@
         const userName = urlParams.get('username');
         document.getElementById('username').textContent = `User: ${userName}`;
 
+        // Lấy số token đã lưu trong localStorage (nếu có)
+        let storedTokens = localStorage.getItem('tokens') || 0;
+        document.getElementById('storedTokens').textContent = `Stored Tokens: ${storedTokens}`;
+
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
             const tokensElement = document.getElementById('tokens');
@@ -94,7 +101,7 @@
             const startButton = document.getElementById('startButton');
             const titleElement = document.getElementById('title'); // Lấy phần tử tiêu đề
             let time = 24 * 3600; // 24 hours in seconds
-            let tokens = 0; // Initialize the token count
+            let tokens = storedTokens; // Lấy số token đã lưu trữ ban đầu
 
             // Đổi tiêu đề thành "Mining"
             titleElement.textContent = "Mining";
@@ -114,6 +121,9 @@
                 // Dừng đồng hồ khi hết thời gian
                 if (time <= 0) {
                     clearInterval(interval);
+                    // Lưu lại số token vào localStorage
+                    localStorage.setItem('tokens', tokens);
+                    document.getElementById('storedTokens').textContent = `Stored Tokens: ${tokens}`;
                 }
 
                 // Cập nhật token, dòng countdown vẫn chạy ngầm
